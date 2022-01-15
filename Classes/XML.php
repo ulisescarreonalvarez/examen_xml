@@ -3,8 +3,8 @@
 class XML
 {
 
-    public $atributos;
-    public $rules;
+    protected $atributos;
+    protected $rules;
 
     function __construct()
     {
@@ -12,7 +12,7 @@ class XML
         $this->rules = array();
     }
 
-    public function setSatFormat($value)
+    protected function setSatFormat($value)
     {
         $aux = trim(strip_tags($value));
         if (!XML::isUtf8($aux)) {
@@ -33,8 +33,8 @@ class XML
         return $aux;
     }
 
-
-    public static function isUtf8($str)
+    # Se deja como protegida ya que no es necesario usarla fuera
+    protected static function isUtf8($str)
     {
         return (bool)preg_match('%^(?:
                 [\x09\x0A\x0D\x20-\x7E]            # ASCII
@@ -49,16 +49,18 @@ class XML
     }
 
     //Resolver funcionalidad
+    #   Debe ser publica ya que se usa fuera de la clase, entonces debe poder ser accedida desde otro lado
     public function setAtribute($attr, $value)
     {
         /**
          *  Original: $this->atributos[] = ($attr != 'TipoDeComprobante') ? $this->setSatFormat($value) : $value; 
          * 
-         *  $attr es un parametro dentro de $this->atributos[]
+         *  El parametro $attr va dentro de los corchetes de $this->atributos[]
          */
         $this->atributos[$attr] = ($attr != 'TipoDeComprobante') ? $this->setSatFormat($value) : $value;
     }
 
+    #   Debe ser publica ya que se usa fuera de la clase, entonces debe poder ser accedida desde otro lado
     public function getAtributes()
     {
         $conenido = '';

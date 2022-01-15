@@ -3,12 +3,13 @@
 class Emisor extends XML
 {
 
-    public $regimenFiscal;
+    # public $regimenFiscal;            -> No se usa en ningun lado de la calse, ni es requerida fuera de la misma
 
+    # Se hace publico
     public function __construct()
     {
         $this->atributos = [];
-        $this->atributos['Rfc'] = '';   # Se agrega el atributo faltante: "RFC"
+        $this->atributos['Rfc'] = '';   # Se agrega el atributo faltante: "Rfc"
         $this->atributos['Nombre'] = '';
         $this->atributos['RegimenFiscal'] = '';
         $this->rules = [];

@@ -6,11 +6,12 @@ include_once './Classes/Emisor.php';
 
 class CFDI
 {
-    #Se hacen publicas par apdoer acceder a ellas fuera de esta clase y se agrega $emisor
+    #Se agrega $emisor y se hace publica junto a $comprobante para pdoer acceder a ellas fuera de esta clase, $xml se deja protegida ya que no es necesario acceder fuera de la clase
     public $emisor;
     public $comprobante;
-    public $xml;
+    protected $xml;
 
+    # Se hace publico, se puede dejar por defualt
     public function __construct()
     {
         $this->comprobante = new Comprobante();
@@ -23,6 +24,6 @@ class CFDI
         $this->xml .= $this->emisor->getNode(); 
         $this->xml .= '</cfdi:Comprobante>';
 
-        return htmlspecialchars($this->xml);
+        return $this->xml;
     }
 }

@@ -7,8 +7,8 @@ include_once './CFDI.php';
 class Main
 {
     # Se hacen protegidas para acceder a ellas, no es necesario hacerlas publicas ya que se usan dentro de la clase
-    public $cfdi_xml;
-    public $array_data = [
+    protected $cfdi_xml;
+    protected $array_data = [
         "Comprobante" => [
             "LugarExpedicion" => "64000",
             "TipoDeComprobante" => "i",
@@ -26,7 +26,7 @@ class Main
         ]
     ];
 
-    #Se hace publica
+    # Se hace publico
     public function __construct()
     {
         $this->cfdi_xml = new CFDI;
@@ -39,17 +39,19 @@ class Main
             if ($key === (string) 'Comprobante') :                                      # != se cambia por ===
                 foreach ($value as $attribute => $value) :
                     //Setear attributos
-                    $this->cfdi_xml->comprobante->setAtribute($attribute, $value);      # Se accede al atributo "Comprobante" y 
+                    $this->cfdi_xml->comprobante->setAtribute($attribute, $value);      # Se accede al atributo "Comprobante" y  se ponen los atributos
                 endforeach;
             endif;
             if ($key === (string) 'Emisor') :                                            # != se cambia por ===
                 foreach ($value as $attribute => $value) :
                     //Setear attributos
-                    $this->cfdi_xml->emisor->setAtribute($attribute, $value);
+                    $this->cfdi_xml->emisor->setAtribute($attribute, $value);            # Se accede al atributo "Comprobante" y  se ponen los atributos
                 endforeach;
             endif;
         endforeach;
-        echo $this->cfdi_xml->getNode();
+        
+        # Para poder visualizar el contenido, se usa la función 'htmlspecialchars' para formatear los caracteres especiales y poder imprimirlos
+        echo htmlspecialchars($this->cfdi_xml->getNode());                                                 # Se imprmime el CFDI generado
     }
 }
 
