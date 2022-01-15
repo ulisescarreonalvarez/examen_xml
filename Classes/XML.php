@@ -3,8 +3,8 @@
 class XML
 {
 
-    protected $atributos;
-    protected $rules;
+    public $atributos;
+    public $rules;
 
     function __construct()
     {
@@ -12,7 +12,7 @@ class XML
         $this->rules = array();
     }
 
-    protected function setSatFormat($value)
+    public function setSatFormat($value)
     {
         $aux = trim(strip_tags($value));
         if (!XML::isUtf8($aux)) {
@@ -34,7 +34,7 @@ class XML
     }
 
 
-    static function isUtf8($str)
+    public static function isUtf8($str)
     {
         return (bool)preg_match('%^(?:
                 [\x09\x0A\x0D\x20-\x7E]            # ASCII
@@ -49,12 +49,17 @@ class XML
     }
 
     //Resolver funcionalidad
-    private function setAtribute($attr, $value)
+    public function setAtribute($attr, $value)
     {
-        $this->atributos[] = ($attr != 'TipoDeComprobante') ? $this->setSatFormat($value) : $value;
+        /**
+         *  Original: $this->atributos[] = ($attr != 'TipoDeComprobante') ? $this->setSatFormat($value) : $value; 
+         * 
+         *  $attr es un parametro dentro de $this->atributos[]
+         */
+        $this->atributos[$attr] = ($attr != 'TipoDeComprobante') ? $this->setSatFormat($value) : $value;
     }
 
-    function getAtributes()
+    public function getAtributes()
     {
         $conenido = '';
         foreach ($this->atributos as $key => $value) :
